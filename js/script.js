@@ -17,7 +17,7 @@ var currentPlace = null;
 var ViewModel = function() {
 	var thisViewModel = this;
 
-	thisViewModel.wikiWord = ko.observable("");//search on wikipedia on this word
+	thisViewModel.wikiWord = ko.observable("Egypt");//search on wikipedia on this word
 	thisViewModel.Wikis = ko.observableArray([]);//wiki pages
 
 	thisViewModel.allPlaces = ko.observableArray([]);//allplaces not filtered
@@ -79,7 +79,11 @@ var ViewModel = function() {
 		        results.forEach(function(PlaceDetails,key){
 		        	placesCache.push(new Place(PlaceDetails,thisViewModel));
 		        	if(key === 0){//save wiki search word to current location
-		        		thisViewModel.wikiWord(PlaceDetails.location.formattedAddress[1]);
+		        		if(PlaceDetails.location.formattedAddress[1] !== undefined){
+							thisViewModel.wikiWord(PlaceDetails.location.formattedAddress[1]);
+		        		}else if(PlaceDetails.location.formattedAddress[0] !== undefined){
+		        			thisViewModel.wikiWord(PlaceDetails.location.formattedAddress[0]);
+		        		}
 		        	}
 		        });
 		        thisViewModel.allPlaces(placesCache);//set allplaces to all places came from API
@@ -129,7 +133,7 @@ var ViewModel = function() {
 	            type: "GET",
 	            url: "http://en.wikipedia.org/w/api.php?action=opensearch&format=json&prop=text&search="+thisViewModel.wikiWord()+"&callback=?",
 	            contentType: "application/json; charset=utf-8",
-	            async: false,
+	            async: true,
 	            dataType: "jsonp",
 	            success: function (data) {
 	                for (var i=0;i<data[1].length;i++){
@@ -238,4 +242,8 @@ var Place = function(placeData, ViewModel){
 
 function initMap(){
 	ko.applyBindings(new ViewModel());
+}
+
+function mapError(){
+	alert("Error while loading Map, please try refreshing the page!");
 }
