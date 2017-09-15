@@ -78,7 +78,7 @@ var ViewModel = function() {
 		        var placesCache = [];
 		        results.forEach(function(PlaceDetails,key){
 		        	placesCache.push(new Place(PlaceDetails,thisViewModel));
-		        	if(key == 0){//save wiki search word to current location
+		        	if(key === 0){//save wiki search word to current location
 		        		thisViewModel.wikiWord(PlaceDetails.location.formattedAddress[1]);
 		        	}
 		        });
@@ -124,7 +124,7 @@ var ViewModel = function() {
 
     //get Wikis from wikipedia API
     thisViewModel.getTips = ko.computed(function() {
-    	if(thisViewModel.wikiWord() != "" && thisViewModel.wikiWord() != undefined){
+    	if(thisViewModel.wikiWord() !== "" && thisViewModel.wikiWord() !== undefined){
     		$.ajax({
 	            type: "GET",
 	            url: "http://en.wikipedia.org/w/api.php?action=opensearch&format=json&prop=text&search="+thisViewModel.wikiWord()+"&callback=?",
@@ -145,13 +145,13 @@ var ViewModel = function() {
 	        
     }, thisViewModel);
 
-}
+};
 
 var Place = function(placeData, ViewModel){
 	var thisPlace = this;
 
 	thisPlace.Name 		 = placeData.name;
-	if(placeData.Categories != undefined){
+	if(placeData.Categories !== undefined){
 		thisPlace.Category 	 = placeData.Categories[0].name;
 	}else{
 		thisPlace.Category = "";
