@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" class="fullHeight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neibourhood Map V2.0</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="fullHeight">
+    <div class="container-fluid fullHeight">
+    	<div class="row fullHeight">
+    		<aside class="col-md-3">
+    			<div class="form-group">
+    				<label>
+    					Search:
+    					<input type="text" id="search" class="form-control" data-bind="textInput: searchInput, valueUpdate: afterkeydown">
+    				</label>
+                    <div>
+                        Showing <b data-bind="text: filteredCount"></b> of <b data-bind="text: allCount"></b>
+                    </div>
+    			</div>
+    			
+    			<ul id="places-list" data-bind="foreach: filteredPlaces">
+    				<li class="places-list-item">
+    					<a href="#" data-bind="text: Name, click: viewPlace"></a>
+    				</li>
+    			</ul>
+    		</aside>
+    		<div class="col-md-6 fullHeight">
+    			<div id="map" class="fullHeight">Enable JavaScript to view the map!</div>
+    		</div>
+            <aside class="col-md-3">
+                <h2>Wikipedia Pages</h2>
+                <ul data-bind="foreach: Wikis">
+                    <li>
+                        <a data-bind="text: Title, attr: {href: Url}" target="_blank"></a>
+                    </li>
+                </ul>
+            </aside>
+    	</div>
+    </div>
+    
+    <script src="js/libs/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/libs/knockout.js"></script>
+    <script src="js/script.js"></script>
+    <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDncsspUZUSa4kQVriRwU5ftmIHpfURBI0&callback=initMap&libraries=places"></script>
+</body>
+</html>
